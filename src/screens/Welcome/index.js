@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, AsyncStorage } from 'react-native';
 import { Container, Text, Button, Content } from 'native-base';
 import Swiper from 'react-native-swiper';
 import { StyleSheet } from 'react-native';
@@ -23,7 +23,10 @@ class WelcomeScreen extends Component {
           </Container>
           <Container style={styles.slide3}>
             <Text style={styles.text}>Dễ dàng</Text>
-            <Button full rounded success onPress={() => this.props.navigation.navigate("main")}>
+            <Button full rounded success onPress={() => {
+              AsyncStorage.setItem('logged_in', JSON.stringify(true));
+              this.props.navigation.navigate("main");
+            }}>
               <Text>Thử ngay</Text>
             </Button>
           </Container>

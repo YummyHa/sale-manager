@@ -28,7 +28,7 @@ export const checkLogin = () => {
   return(dispatch) => {
     dispatch({ type: INIT_CHECKING_STATE });
     firebase.auth().onAuthStateChanged(user => {
-      if (user) {
+      if (user) {       
         dispatch({ type: EMAIL_LOGIN_SUCCESS, payload: user });
       } else {
         dispatch({ type: CHECK_LOGIN_FAILED });

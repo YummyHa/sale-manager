@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Keyboard } from 'react-native';
+import _ from 'lodash';
+import { Keyboard, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import { StyleSheet, StatusBar, ImageBackground, Dimensions, Image } from 'react-native';
 import { Container, Text, Button, Content, Icon, View, Input, Form, Item, StyleProvider, Spinner } from "native-base";
@@ -17,11 +18,15 @@ class LoginScreen extends Component {
 
   componentDidMount() {
     this.props.checkLogin();
+    // AsyncStorage.removeItem('logged_in');
   }
 
-  componentWillReceiveProps(nextProp) {
-    if (nextProp.loggedIn) {
+  async componentWillReceiveProps(nextProp) {
+    let user_loggedIn = await AsyncStorage.getItem('logged_in');
+    if (nextProp.loggedIn && _.isNull(user_loggedIn)) {
       this.props.navigation.navigate('welcome');
+    } else if (nextProp.loggedIn && user_loggedIn) {
+      this.props.navigation.navigate('main');
     }
   }
 
