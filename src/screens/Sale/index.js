@@ -1,16 +1,29 @@
 import React, { Component } from "react";
+import { BackHandler, StatusBar } from 'react-native';
 import { Container, Text, Header, Left, Body, Right, Title, Icon, Button } from "native-base";
 
 class SaleScreen extends Component {
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  handleBackButton() {
+    return true;
+  }
+
   render() {
     return (
       <Container>
+        <StatusBar
+          translucent={false}
+        /> 
+
         <Header>
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.navigate("welcome")}>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
+          <Left />
           <Body>
             <Title>SaleScreen</Title>
           </Body>

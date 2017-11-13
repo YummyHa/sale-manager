@@ -9,9 +9,9 @@ class WelcomeScreen extends Component {
     return (
       <Container>
         <StatusBar
-          translucent={false}
+          translucent={true}
           barStyle="dark-content"
-          backgroundColor="#ffb300"
+          backgroundColor="transparent"
         />
 
         <Swiper showsButtons={false}>
@@ -23,7 +23,7 @@ class WelcomeScreen extends Component {
           </Container>
           <Container style={styles.slide3}>
             <Text style={styles.text}>Dễ dàng</Text>
-            <Button full rounded success onPress={() => this.props.navigation.navigate("login")}>
+            <Button full rounded success onPress={() => this.props.navigation.navigate("main")}>
               <Text>Thử ngay</Text>
             </Button>
           </Container>

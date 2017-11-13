@@ -4,36 +4,36 @@ import { StackNavigator, TabNavigator } from 'react-navigation';
 
 import TabBarBottom from './components/TabBarBottom';
 
-import Login from './containers/LoginContainer';
-import Orders from "./containers/OrdersContainer";
-import Products from "./containers/ProductsContainer";
-import Sale from "./containers/SaleContainer";
-import Settings from './containers/SettingsContainer';
-import Summary from "./containers/SummaryContainer";
-import Welcome from "./containers/WelcomeContainer";
+import Login from './screens/Login';
+import Orders from "./screens/Orders";
+import Products from "./screens/Products";
+import Sale from "./screens/Sale";
+import Settings from './screens/Settings';
+import Summary from "./screens/Summary";
+import Welcome from "./screens/Welcome";
 
 const MainNavigator = TabNavigator({
-    sale: { screen: Sale },
-    orders: { screen: Orders },
-    products: { screen: Products },
-    summary: { screen: Summary },
-    settings: { screen: Settings },
-    }, {
-        tabBarPosition: 'bottom',
-        swipeEnabled: false,
-        tabBarComponent: props => <TabBarBottom {...props} />
-    }
+  sale: { screen: Sale },
+  orders: { screen: Orders },
+  products: { screen: Products },
+  summary: { screen: Summary },
+  settings: { screen: Settings },
+}, {
+    tabBarPosition: 'bottom',
+    swipeEnabled: false,
+    tabBarComponent: props => <TabBarBottom {...props} />
+}
 );
 
 const RootNavigator = StackNavigator({
-    welcome: { screen: Welcome },
-    login: { screen: Login },
-    main: {
-        screen: MainNavigator
-    },
-    }, {
-        headerMode: 'none'
-    });
+  login: { screen: Login },
+  welcome: { screen: Welcome },    
+  main: {
+      screen: MainNavigator
+  }
+}, {
+    headerMode: 'none',     
+});
 
 export default () => (
     <Root>

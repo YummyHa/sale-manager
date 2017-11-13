@@ -1,0 +1,9 @@
+export const EMAIL_CHANGED = 'email_changed';
+export const PASSWORD_CHANGED = 'password_changed';
+export const CHECK_LOGIN = 'check_login';
+export const EMAIL_LOGIN_SUCCESS = 'email_login_success';
+export const EMAIL_LOGIN_FAIL = 'email_login_fail';
+export const EMAIL_LOGIN = 'email_login';
+export const CHECK_LOGIN_FAILED = 'check_login_failed';
+export const INIT_CHECKING_STATE = 'init_checking_state';
+export const USER_LOGOUT = 'user_logout';

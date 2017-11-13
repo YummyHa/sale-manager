@@ -1,71 +1,144 @@
 import React, { Component } from 'react';
+import { Keyboard } from 'react-native';
+import { connect } from 'react-redux';
 import { StyleSheet, StatusBar, ImageBackground, Dimensions, Image } from 'react-native';
-import { Container, Text, Button, Content, Icon, View, Input, Form, Item, StyleProvider, Label } from "native-base";
+import { Container, Text, Button, Content, Icon, View, Input, Form, Item, StyleProvider, Spinner } from "native-base";
 
 import getTheme from '../../native-base-theme/components';
+import { emailChanged, passwordChanged, emailLogin, checkLogin } from './actions';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
 class LoginScreen extends Component {
-  render() {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    this.props.checkLogin();
+  }
+
+  componentWillReceiveProps(nextProp) {
+    if (nextProp.loggedIn) {
+      this.props.navigation.navigate('welcome');
+    }
+  }
+
+  onEmailChange(text) {
+    this.props.emailChanged(text);
+  }
+
+  onPasswordChange(text) {
+    this.props.passwordChanged(text);
+  }
+
+  onEmailLogin() {
+    const { email, password } = this.props;
+    Keyboard.dismiss();
+    this.props.emailLogin({email, password});
+  }
+
+  renderButton() {
+    if (this.props.loading) {
+      return (
+        <Button
+          success
+          full
+          rounded
+          style={{ marginBottom: 20, marginLeft: 10, marginRight: 10 }}
+        >
+          <Spinner color="#fff" />
+        </Button>       
+      );     
+    }
+
+    return <Button
+      onPress={this.onEmailLogin.bind(this)}
+      success
+      full
+      rounded
+      style={{ marginBottom: 20, marginLeft: 10, marginRight: 10 }}
+    >
+      <Text style={{ color: "#fff" }}>Login</Text>
+    </Button>
+  }
+
+  renderContent() {
     return (
       <ImageBackground source={require("../../images/sale-bg.png")} style={styles.backgroundImageStyle}>
         <StatusBar
           translucent={true}
           barStyle="light-content"
           backgroundColor="transparent"
-        /> 
-        <Container>  
+        />       
+        <Container>
           <Content keyboardShouldPersistTaps='handled'>
             {/* Header icon */}
             <Image source={require("../../images/sale-icon.png")} style={styles.headerIconStyle} />
 
             {/* input and login button */}
-            <Form style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}>
+            <Form style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }} returnKeyType='next'>
+
+              {/* Email Input */}
               <Item rounded style={{ backgroundColor: "rgba(248, 248, 248, 0.3)" }}>
                 <StyleProvider style={getTheme({ iconFamily: "MaterialCommunityIcons" })}>
                   <Icon active name="email-outline" style={{ color: '#fff', fontSize: 20 }} />
                 </StyleProvider>
-                <Input 
-                  placeholder="Email" 
-                  placeholderTextColor="#fff" 
+                <Input
+                  placeholder="Email"
+                  placeholderTextColor="#fff"
+                  keyboardType='email-address'
                   style={{ color: '#fff', fontSize: 14 }}
-                  blurOnSubmit={false}        
+                  onChangeText={this.onEmailChange.bind(this)}
+                  value={this.props.email}
                 />
               </Item>
 
               <View style={{ height: 10 }} />
 
+              {/* Password Input */}
               <Item rounded style={{ backgroundColor: "rgba(248, 248, 248, 0.3)" }}>
                 <StyleProvider style={getTheme({ iconFamily: "MaterialCommunityIcons" })}>
                   <Icon active name="lock-open-outline" style={{ color: '#fff', fontSize: 20 }} />
                 </StyleProvider>
-                <Input placeholder="Password" placeholderTextColor="#fff" style={{ color: '#fff', fontSize: 14 }} />
+                <Input
+                  placeholder="Password"
+                  placeholderTextColor="#fff"
+                  secureTextEntry
+                  style={{ color: '#fff', fontSize: 14 }}
+                  onChangeText={this.onPasswordChange.bind(this)}
+                  value={this.props.password}
+                />
               </Item>
             </Form>
 
+            <Text style={styles.errorMessage}>{this.props.error}</Text>
             <View style={{ height: 20 }} />
 
-            <Button
-              success
-              full
-              rounded
-              style={{ marginBottom: 20, marginLeft: 10, marginRight: 10 }}
-            >
-              <Text style={{ color: "#fff" }}>Login</Text>
-            </Button>
+            {this.renderButton()}
 
             <Container style={{ height: 50, flexDirection: 'row', justifyContent: 'space-between', marginLeft: 20, marginRight: 20 }}>
               <Text style={styles.textStyle}>Forgot password?</Text>
               <Text style={styles.textStyle}>Create new account</Text>
             </Container>
-          </Content>
 
-                   
+          </Content>
         </Container>
       </ImageBackground>
-    );
+    );   
+  }
+
+  render() {
+    if (this.props.isChecking) {
+      return (
+        <Container style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Spinner color="#26c6da" /> 
+        </Container>
+      );
+    }
+
+    return this.renderContent();
   }
 }
 
@@ -87,7 +160,23 @@ const styles = StyleSheet.create({
   textStyle: {
     color: '#fff', 
     fontSize: 14
+  },
+  errorMessage: {
+    color: '#c62828',
+    fontSize: 14,
+    marginLeft: 20,
+    marginTop: 5
+  },
+  checkingSpinner: {
+    alignSelf: 'center'
   }
 });
 
-export default LoginScreen;
+const mapStateToProps = ({ auth }) => {
+  const { email, password, error, loading, loggedIn, isChecking } = auth;
+  return { email, password, error, loading, loggedIn, isChecking }; 
+};
+
+export default connect(mapStateToProps, { 
+  emailChanged, passwordChanged, emailLogin, checkLogin 
+})(LoginScreen);
