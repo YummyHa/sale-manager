@@ -6,7 +6,7 @@ import { StyleSheet, StatusBar, ImageBackground, Dimensions, Image } from 'react
 import { Container, Text, Button, Content, Icon, View, Input, Form, Item, StyleProvider, Spinner } from "native-base";
 
 import getTheme from '../../native-base-theme/components';
-import { emailChanged, passwordChanged, emailLogin, checkLogin } from './actions';
+import { emailChanged, passwordChanged, emailLogin, checkLogin } from '../../actions/authActions';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -65,7 +65,7 @@ class LoginScreen extends Component {
       rounded
       style={{ marginBottom: 20, marginLeft: 10, marginRight: 10 }}
     >
-      <Text style={{ color: "#fff" }}>Login</Text>
+      <Text style={{ color: "#fff" }}>Đăng nhập</Text>
     </Button>
   }
 
@@ -124,8 +124,8 @@ class LoginScreen extends Component {
             {this.renderButton()}
 
             <Container style={{ height: 50, flexDirection: 'row', justifyContent: 'space-between', marginLeft: 20, marginRight: 20 }}>
-              <Text style={styles.textStyle}>Forgot password?</Text>
-              <Text style={styles.textStyle}>Create new account</Text>
+              <Text style={styles.textStyle}>Quên mật khẩu?</Text>
+              <Text style={styles.textStyle}>Tạo tài khoản</Text>
             </Container>
 
           </Content>

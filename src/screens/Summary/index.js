@@ -1,11 +1,21 @@
 import React, { Component } from "react";
-import { Container, Text } from "native-base";
+import { Container, Content, Text, Header, Left, Body, Right, Title } from "native-base";
 
 class SummaryScreen extends Component {
   render() {
     return (
       <Container>
-        <Text>This is SummaryScreen</Text>
+        <Header>
+          <Left />
+          <Body>
+            <Title>Thống kê</Title>
+          </Body>
+          <Right />
+        </Header>
+
+        <Content>
+          <Text>some content</Text>
+        </Content>        
       </Container>
     );
   }

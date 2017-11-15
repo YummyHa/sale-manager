@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Container, Content, Text, Button, Header, Left, Body, Right, Title } from "native-base";
 import firebase from 'firebase';
 
-import { userLogout } from '../Login/actions';
+import { userLogout } from '../../actions/authActions';
 
 class SettingsScreen extends Component {
   componentWillReceiveProps(nextProps) {

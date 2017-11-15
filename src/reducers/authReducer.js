@@ -7,7 +7,7 @@ import {
   CHECK_LOGIN_FAILED,
   INIT_CHECKING_STATE,
   USER_LOGOUT
-} from '../../actions/types';
+} from '../actions/types';
 
 const INITIAL_STATE = { 
   email: '', 
