@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { BackHandler, StatusBar, StyleSheet } from 'react-native';
+import { BackHandler, StatusBar, StyleSheet, FlatList, View } from 'react-native';
+import { connect } from 'react-redux';
 import { 
   Container,  
-  View,
   Content, 
   Text, 
   Header, 
@@ -17,14 +17,18 @@ import {
   StyleProvider, 
   List, 
   ListItem, 
-  Thumbnail 
+  Thumbnail,
+  Spinner 
 } from "native-base";
 
 import getTheme from '../../native-base-theme/components';
 
+import * as actions from '../../actions/productActions';
+
 class SaleScreen extends Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    this.props.fetchListProduct();
   }
 
   componentWillUnmount() {
@@ -33,6 +37,30 @@ class SaleScreen extends Component {
 
   handleBackButton() {
     return true;
+  }
+
+  renderItem = ({ item }) => {
+    let attrList = item.attr.map((r, i) => {
+      return <Text key={r.attrName} numberOfLines={1} note>{r.attrName}: {r.value}</Text>
+    });
+
+    return (
+      <ListItem thumbnail style={{ marginBottom: 1, minHeight: 60 }}>
+        <Left>
+          <Thumbnail square source={require("../../images/product-default.png")} />
+        </Left>
+        <Body>
+          <Text>{item.name}</Text>
+          {console.log(item.attr)}
+          {item.attr.length === 0 ? <Text numberOfLines={1} note>Chưa có thuộc tính...</Text> : attrList}
+          {item.desc !== "" ? <Text numberOfLines={1} note>{item.desc}</Text> : <Text numberOfLines={1} note>Chưa có mô tả...</Text>}
+        </Body>
+        <Right>
+          <Text style={{ color: '#4c2c09' }}>SL: {item.quantity}</Text>
+          <Text style={{ color: '#e58824' }}>{item.sell_price} đ</Text>
+        </Right>
+      </ListItem>
+    );
   }
 
   render() {
@@ -60,32 +88,22 @@ class SaleScreen extends Component {
           </Item>
         </Header>
 
-        <Container style={containerStyle}>
+        {this.props.isLoadingProducts === false ? <Container style={containerStyle}>
           <Item style={customerItemStyle} >
             <StyleProvider style={getTheme({ iconFamily: "MaterialCommunityIcons" })}>
               <Icon active name="sort-variant" style={{ fontSize: 20 }} />
             </StyleProvider>
             <Text style={{ fontSize: 13 }}>Tất cả</Text>
-          </Item>    
+          </Item>
 
           <Content style={listStyle}>
-            <List>
-              <ListItem thumbnail>
-                <Left>
-                  <Thumbnail square size={80} source={{ uri: 'Image URL' }} />
-                </Left>
-                <Body>
-                  <Text>Ao So mi</Text>
-                  <Text note>blah blah blah blah . .</Text>
-                </Body>
-                <Right>
-                  <Text>Thêm HĐ</Text>
-                </Right>               
-              </ListItem>
-            </List>
+            <FlatList
+              data={this.props.products}
+              renderItem={this.renderItem}
+              keyExtractor={item => item.id}
+            />
           </Content>
-
-        </Container>
+        </Container> : <Spinner color="#039be5" />}
       </Container>
     );
   }
@@ -93,18 +111,22 @@ class SaleScreen extends Component {
 
 const styles = StyleSheet.create({
   containerStyle: {
-    paddingTop: 5
   },
   customerItemStyle: {
-    height: 30,
+    height: 35,
     paddingLeft: 10,
     paddingRight: 10,
     flexDirection: 'row',
-    borderBottomWidth: 0,
   },
   listStyle: {
     backgroundColor: '#fff'
   }
 });
 
-export default SaleScreen;
+const mapStateToProps = (state) => {
+  const { products, isLoadingProducts } = state.list_product;
+
+  return { products, isLoadingProducts };
+}
+
+export default connect(mapStateToProps, actions)(SaleScreen);

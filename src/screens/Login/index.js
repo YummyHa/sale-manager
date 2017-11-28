@@ -6,7 +6,7 @@ import { StyleSheet, StatusBar, ImageBackground, Dimensions, Image } from 'react
 import { Container, Text, Button, Content, Icon, View, Input, Form, Item, StyleProvider, Spinner } from "native-base";
 
 import getTheme from '../../native-base-theme/components';
-import { emailChanged, passwordChanged, emailLogin, checkLogin } from '../../actions/authActions';
+import { emailChanged, passwordChanged, emailLogin, checkLogin } from '../../actions';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;

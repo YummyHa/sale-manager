@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { BackHandler, StatusBar, StyleSheet, FlatList } from 'react-native';
+import { BackHandler, StatusBar, StyleSheet, FlatList, View } from 'react-native';
+import { connect } from 'react-redux';
 import {
   Container,
-  View,
   Content,
   Text,
   Header,
@@ -19,25 +19,17 @@ import {
   ListItem,
   Thumbnail,
   Fab,
+  Spinner
 } from "native-base";
 
 import getTheme from '../../native-base-theme/components';
 
-// Dummy datas
-const datas = [
-  'Simon Mignolet',
-  'Nathaniel Clyne',
-  'Dejan Lovren',
-  'Mama Sakho',
-  'Alberto Moreno',
-  'Emre Can',
-  'Joe Allen',
-  'Phil Coutinho',
-];
+import * as actions from '../../actions/productActions';
 
 class ProductsScreen extends Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    this.props.fetchListProduct();
   }
 
   componentWillUnmount() {
@@ -49,22 +41,26 @@ class ProductsScreen extends Component {
   }
 
   renderItem = ({ item }) => {
+    let attrList = item.attr.map((r, i) => {
+      return <Text key={r.attrName} numberOfLines={1} note>{r.attrName}: {r.value}</Text>
+    });
+
     return (
-      <ListItem thumbnail style={{ marginBottom: 1 }}>
+      <ListItem thumbnail style={{ marginBottom: 1, minHeight: 60 }}>
         <Left>
-          <Thumbnail square size={55} source={{ uri: 'https://images-na.ssl-images-amazon.com/images/I/51qmhXWZBxL.jpg' }} />
+          <Thumbnail square source={require("../../images/product-default.png")} />
         </Left>
         <Body>
-          <Text>{item}</Text>
-          <Text numberOfLines={1} note>mau sac: do</Text>
-          <Text numberOfLines={1} note>size: 30</Text>
-          <Text numberOfLines={1} note>blah</Text>
+          <Text>{item.name}</Text>
+          {console.log(item.attr)}
+          {item.attr.length === 0 ? <Text numberOfLines={1} note>Chưa có thuộc tính...</Text> : attrList}
+          {item.desc !== "" ? <Text numberOfLines={1} note>{item.desc}</Text> : <Text numberOfLines={1} note>Chưa có mô tả...</Text>}
         </Body>
         <Right>
-          <Text style={{ color: '#4c2c09' }}>SL: 50</Text>
-          <Text style={{ color: '#e58824' }}>50,000đ</Text>
+          <Text style={{ color: '#4c2c09' }}>SL: {item.quantity}</Text>
+          <Text style={{ color: '#e58824' }}>{item.sell_price} đ</Text>
         </Right>
-      </ListItem>    
+      </ListItem>
     );
   }
 
@@ -87,13 +83,17 @@ class ProductsScreen extends Component {
                 color: "#222222"
               }}
             />
+            <Icon active name='add' style={{ color: '#222222' }} onPress={() => this.props.navigation.navigate('product_create')} />
             <StyleProvider style={getTheme({ iconFamily: "MaterialCommunityIcons" })}>
-              <Icon active name="barcode-scan" style={{ color: '#222222' }} />
+              <Icon active name="barcode-scan" style={{ color: '#222222' }} onPress={() => {
+                this.props.navigation.navigate('product_create');
+                this.props.navigation.navigate('scanner');
+              }} />
             </StyleProvider>
           </Item>
         </Header>
 
-        <Container style={containerStyle}>
+        {this.props.isLoadingProducts === false ? <Container style={containerStyle}>
           <Item style={customerItemStyle} >
             <StyleProvider style={getTheme({ iconFamily: "MaterialCommunityIcons" })}>
               <Icon active name="sort-variant" style={{ fontSize: 20 }} />
@@ -101,23 +101,15 @@ class ProductsScreen extends Component {
             <Text style={{ fontSize: 13 }}>Tất cả</Text>
           </Item>
 
-          <Fab
-            active
-            position='bottomRight'
-            style={{ backgroundColor: '#26c6da' }}            
-          >
-            <Icon name="add" />
-          </Fab>
-
           <Content style={listStyle}>
-            <FlatList 
-              data={datas}
+            <FlatList
+              data={this.props.products}
               renderItem={this.renderItem}
-              keyExtractor={item => item}
+              keyExtractor={item => item.id}
             />
           </Content>
+        </Container> : <Spinner color="#039be5" />}
 
-        </Container>
       </Container>
     );
   }
@@ -137,4 +129,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ProductsScreen;
+const mapStateToProps = (state) => {
+  const { products, isLoadingProducts } = state.list_product;
+
+  return { products, isLoadingProducts };
+}
+
+export default connect(mapStateToProps, actions)(ProductsScreen);

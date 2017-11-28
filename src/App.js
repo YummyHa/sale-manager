@@ -11,32 +11,45 @@ import Sale from "./screens/Sale";
 import Settings from './screens/Settings';
 import Summary from "./screens/Summary";
 import Welcome from "./screens/Welcome";
+import CreateProduct from './screens/Products/createProduct';
+import BarCodeScanner from './screens/BarCodeScanner';
+import ProductAttributes from './screens/ProductAttributes';
+import CategoriesScreen from './screens/CategoriesScreen';
+
+const productNavigator = StackNavigator({
+  product_index: { screen: Products },
+  product_create: { screen: CreateProduct },
+  product_attr: { screen: ProductAttributes },
+  cate_screen: { screen: CategoriesScreen }
+}, {
+    headerMode: 'none'
+  });
 
 const MainNavigator = TabNavigator({
   sale: { screen: Sale },
   orders: { screen: Orders },
-  products: { screen: Products },
+  products: { screen: productNavigator },
   summary: { screen: Summary },
   settings: { screen: Settings },
 }, {
     tabBarPosition: 'bottom',
     swipeEnabled: false,
-    tabBarComponent: props => <TabBarBottom {...props} />
-}
-);
+    animationEnabled: true,
+    tabBarComponent: props => <TabBarBottom {...props} />,
+    lazy: true,
+  });
 
 const RootNavigator = StackNavigator({
   login: { screen: Login },
-  welcome: { screen: Welcome },    
-  main: {
-      screen: MainNavigator
-  }
+  welcome: { screen: Welcome },
+  main: { screen: MainNavigator },
+  scanner: { screen: BarCodeScanner }
 }, {
-    headerMode: 'none',     
-});
+    headerMode: 'none',
+  });
 
 export default () => (
-    <Root>
-        <RootNavigator />
-    </Root>
+  <Root>
+    <RootNavigator />
+  </Root>
 );
