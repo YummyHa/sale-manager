@@ -15,6 +15,7 @@ import CreateProduct from './screens/Products/createProduct';
 import BarCodeScanner from './screens/BarCodeScanner';
 import ProductAttributes from './screens/ProductAttributes';
 import CategoriesScreen from './screens/CategoriesScreen';
+import CustomersScreen from './screens/Customers';
 
 const productNavigator = StackNavigator({
   product_index: { screen: Products },
@@ -43,7 +44,8 @@ const RootNavigator = StackNavigator({
   login: { screen: Login },
   welcome: { screen: Welcome },
   main: { screen: MainNavigator },
-  scanner: { screen: BarCodeScanner }
+  scanner: { screen: BarCodeScanner },
+  customers: { screen: CustomersScreen }
 }, {
     headerMode: 'none',
   });

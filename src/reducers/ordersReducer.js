@@ -7,7 +7,8 @@ import {
   UPDATE_ORDER_QUANTITY_PLUS,
   UPDATE_ORDER_QUANTITY_MINUS,
   UPDATE_ORDER_LIST,
-  UPDATE_TOTAL_ORDER_AMOUNT
+  UPDATE_TOTAL_ORDER_AMOUNT,
+  UPDATE_CUSTOMER_NAME_IN_ORDERING_LIST,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -53,6 +54,8 @@ export default (state = INITIAL_STATE, action) => {
         s += value.sell_price * value.quantity;
       });
       return { ...state, total: s }
+    case UPDATE_CUSTOMER_NAME_IN_ORDERING_LIST:
+      return { ...state, customer: action.payload }
     default:
       return state;
   }

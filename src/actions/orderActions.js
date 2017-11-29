@@ -7,7 +7,8 @@ import {
   UPDATE_ORDER_QUANTITY_MINUS,
   UPDATE_ORDER_QUANTITY,
   UPDATE_ORDER_LIST,
-  UPDATE_TOTAL_ORDER_AMOUNT
+  UPDATE_TOTAL_ORDER_AMOUNT,
+  UPDATE_CUSTOMER_NAME_IN_ORDERING_LIST
 } from './types';
 
 export const addProductToOrderList = (item, list) => dispatch => {
@@ -32,4 +33,9 @@ export const updateOrderQuantityByButton = (type, index) => dispatch => {
 export const removeItemInOrderingList = (list) => dispatch => {
   dispatch({ type: UPDATE_ORDER_LIST, payload: list })
   dispatch({ type: UPDATE_TOTAL_ORDER_AMOUNT });
+}
+
+export const updateCustomerNameInOrderingList = (value, callback) => dispatch => {
+  dispatch({ type: UPDATE_CUSTOMER_NAME_IN_ORDERING_LIST, payload: value });
+  callback();
 }

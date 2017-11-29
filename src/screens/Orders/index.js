@@ -77,7 +77,7 @@ class OrdersScreen extends Component {
         {this.props.ordering_list.length === 0 ? <Container style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text note>Chưa có mặt hàng nào trong đơn hàng!</Text>
         </Container> : <Container>
-            <TouchableOpacity style={customer}>
+            <TouchableOpacity style={customer} onPress={() => this.props.navigation.navigate('customers')}>
               <Icon name="person" style={{ color: '#bdbdbd' }} />
               <Text style={{ fontSize: 14, marginTop: 3 }}>{this.props.customer}</Text>
               <Icon name="ios-arrow-forward" style={{ color: '#bdbdbd' }} />
