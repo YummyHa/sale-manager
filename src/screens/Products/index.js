@@ -52,7 +52,6 @@ class ProductsScreen extends Component {
         </Left>
         <Body>
           <Text>{item.name}</Text>
-          {console.log(item.attr)}
           {item.attr.length === 0 ? <Text numberOfLines={1} note>Chưa có thuộc tính...</Text> : attrList}
           {item.desc !== "" ? <Text numberOfLines={1} note>{item.desc}</Text> : <Text numberOfLines={1} note>Chưa có mô tả...</Text>}
         </Body>

@@ -23,7 +23,7 @@ import {
 
 import getTheme from '../../native-base-theme/components';
 
-import * as actions from '../../actions/productActions';
+import * as actions from '../../actions';
 
 class SaleScreen extends Component {
   componentDidMount() {
@@ -45,13 +45,16 @@ class SaleScreen extends Component {
     });
 
     return (
-      <ListItem thumbnail style={{ marginBottom: 1, minHeight: 60 }}>
+      <ListItem 
+        thumbnail 
+        style={{ marginBottom: 1, minHeight: 60 }}
+        onPress={() => this.props.addProductToOrderList(item, this.props.ordering_list)}
+      >
         <Left>
           <Thumbnail square source={require("../../images/product-default.png")} />
         </Left>
         <Body>
           <Text>{item.name}</Text>
-          {console.log(item.attr)}
           {item.attr.length === 0 ? <Text numberOfLines={1} note>Chưa có thuộc tính...</Text> : attrList}
           {item.desc !== "" ? <Text numberOfLines={1} note>{item.desc}</Text> : <Text numberOfLines={1} note>Chưa có mô tả...</Text>}
         </Body>
@@ -125,8 +128,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { products, isLoadingProducts } = state.list_product;
+  const { ordering_list } = state.orders;
 
-  return { products, isLoadingProducts };
+  return { products, isLoadingProducts, ordering_list };
 }
 
 export default connect(mapStateToProps, actions)(SaleScreen);

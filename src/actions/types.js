@@ -37,3 +37,10 @@ export const CLOSE_ADD_CATE_DIALOG = 'close_add_cate_dialog';
 export const ERROR_ADD_CATE_CHANGED = 'error_add_cate_changed';
 export const ADDING_NEW_CATE = 'adding_new_cate';
 export const REMOVE_CATE = 'remove_cate';
+
+export const ADD_NEW_ORDER_SUCCESS = 'add_new_order_success';
+export const UPDATE_ORDER_QUANTITY_PLUS = 'update_order_quantity_plus';
+export const UPDATE_ORDER_QUANTITY_MINUS = 'update_order_quantity_minus';
+export const UPDATE_ORDER_QUANTITY = 'update_order_quantity';
+export const UPDATE_ORDER_LIST = 'update_order_list';
+export const UPDATE_TOTAL_ORDER_AMOUNT = 'update_total_order_amout';

@@ -15,7 +15,6 @@ import {
   CREATE_PRODUCT_SUCCESS,
   FETCH_PRODUCT_SUCCESS
 } from './types';
-import { Date } from 'core-js/library/web/timers';
 
 export const productUpdate = ({ prop, value }) => {
   return {

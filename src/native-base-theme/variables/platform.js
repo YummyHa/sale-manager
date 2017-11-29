@@ -42,10 +42,10 @@ export default {
 
   // Segment
   segmentBackgroundColor: platform === "ios" ? "#F8F8F8" : "#f5f5f5",
-  segmentActiveBackgroundColor: platform === "ios" ? "#4dd0e1" : "#fff",
-  segmentTextColor: platform === "ios" ? "#4dd0e1" : "#fff",
+  segmentActiveBackgroundColor: platform === "ios" ? "#039be5" : "#fff",
+  segmentTextColor: platform === "ios" ? "#039be5" : "#fff",
   segmentActiveTextColor: platform === "ios" ? "#fff" : "#f5f5f5",
-  segmentBorderColor: platform === "ios" ? "#4dd0e1" : "#fff",
+  segmentBorderColor: platform === "ios" ? "#039be5" : "#fff",
   segmentBorderColorMain: platform === "ios" ? "#a7a6ab" : "#f5f5f5",
 
   // New Variable
@@ -109,7 +109,7 @@ export default {
   cardDefaultBg: "#fff",
 
   // Color
-  brandPrimary: platform === "ios" ? "#4dd0e1" : "#f5f5f5",
+  brandPrimary: platform === "ios" ? "#039be5" : "#f5f5f5",
   brandInfo: "#62B1F6",
   brandSuccess: "#5cb85c",
   brandDanger: "#d9534f",
@@ -140,31 +140,31 @@ export default {
   // FooterTab
   tabBarTextColor: platform === "ios" ? "#bdbdbd" : "#bdbdbd",
   tabBarTextSize: platform === "ios" ? 14 : 11,
-  activeTab: platform === "ios" ? "#4dd0e1" : "#4dd0e1",
-  sTabBarActiveTextColor: "#4dd0e1",
-  tabBarActiveTextColor: platform === "ios" ? "#4dd0e1" : "#4dd0e1",
+  activeTab: platform === "ios" ? "#039be5" : "#039be5",
+  sTabBarActiveTextColor: "#039be5",
+  tabBarActiveTextColor: platform === "ios" ? "#039be5" : "#039be5",
   tabActiveBgColor: platform === "ios" ? "#F8F8F8" : "#F8F8F8",
 
   // Tab
-  tabDefaultBg: platform === "ios" ? "#f5f5f5" : "#f5f5f5",
+  tabDefaultBg: platform === "ios" ? "#039be5" : "#039be5",
   topTabBarTextColor: platform === "ios" ? "#6b6b6b" : "#6b6b6b",
-  topTabBarActiveTextColor: platform === "ios" ? "#4dd0e1" : "#4dd0e1",
-  topTabActiveBgColor: platform === "ios" ? "#cde1f9" : "#cde1f9",
+  topTabBarActiveTextColor: platform === "ios" ? "#039be5" : "#039be5",
+  topTabActiveBgColor: platform === "ios" ? "#fff" : "#fff",
   topTabBarBorderColor: platform === "ios" ? "#bdbdbd" : "#bdbdbd",
-  topTabBarActiveBorderColor: platform === "ios" ? "#4dd0e1" : "#4dd0e1",
+  topTabBarActiveBorderColor: platform === "ios" ? "#039be5" : "#039be5",
 
   // Header
   toolbarBtnColor: platform === "ios" ? "#424242" : "#424242",
-  toolbarDefaultBg: platform === "ios" ? "#F8F8F8" : "#F8F8F8",
+  toolbarDefaultBg: platform === "ios" ? "#039be5" : "#039be5",
   toolbarHeight: platform === "ios" ? (isIphoneX ? 88 : 64) : 56,
   toolbarIconSize: platform === "ios" ? 20 : 22,
   toolbarSearchIconSize: platform === "ios" ? 20 : 23,
-  toolbarInputColor: platform === "ios" ? "#CECDD2" : "#CECDD2",
+  toolbarInputColor: platform === "ios" ? "#fff" : "#fff",
   searchBarHeight: platform === "ios" ? 30 : 40,
   toolbarInverseBg: "#222",
-  toolbarTextColor: platform === "ios" ? "#424242" : "#424242",
-  toolbarDefaultBorder: platform === "ios" ? "#a7a6ab" : "#a7a6ab",
-  iosStatusbar: platform === "ios" ? "dark-content" : "dark-content",
+  toolbarTextColor: platform === "ios" ? "#fff" : "#fff",
+  toolbarDefaultBorder: platform === "ios" ? "#039be5" : "#039be5",
+  iosStatusbar: platform === "ios" ? "light-content" : "light-content",
   get statusBarColor() {
     return color(this.toolbarDefaultBg)
       .darken(0.2)

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Button, Text, Icon, Footer, FooterTab, StyleProvider, Badge } from 'native-base';
 
 import getTheme from '../native-base-theme/components';
 
-export default class TabBarBottom extends Component {
+import * as actions from '../actions';
+
+class TabBarBottom extends Component {
     render() {
         return <Footer>
             <FooterTab>
@@ -13,7 +16,7 @@ export default class TabBarBottom extends Component {
                 </StyleProvider>
               </Button>
               <Button vertical active={this.props.navigationState.index === 1} onPress={() => this.props.navigation.navigate("orders")} badge>
-                <Badge><Text>0</Text></Badge>
+                <Badge><Text>{this.props.ordering_total_items}</Text></Badge>
                 <StyleProvider style={getTheme({ iconFamily: "FontAwesome" })}>
                   <Icon name="file-text-o" style={{ fontSize: 24 }} />                 
                 </StyleProvider>               
@@ -33,3 +36,11 @@ export default class TabBarBottom extends Component {
           </Footer>;
     }
 }
+
+const mapStateToProps = (state) => {
+  const { ordering_total_items } = state.orders;
+
+  return { ordering_total_items };
+}
+
+export default connect(mapStateToProps, actions)(TabBarBottom);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import { AppLoading } from 'expo';
 import { Keyboard, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import { StyleSheet, StatusBar, ImageBackground, Dimensions, Image } from 'react-native';
@@ -138,7 +139,7 @@ class LoginScreen extends Component {
     if (this.props.isChecking) {
       return (
         <Container style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Spinner color="#26c6da" /> 
+          <AppLoading /> 
         </Container>
       );
     }
