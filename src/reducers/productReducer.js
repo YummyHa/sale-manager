@@ -9,23 +9,29 @@ import {
   CHOOSING_ATTR,
   START_CREATE_PRODUCT,
   FINISH_CREATE_PRODUCT,
-  UPLOAD_PRODUCT_IMAGE_SUCCESS
+  UPLOAD_PRODUCT_IMAGE_SUCCESS,
+  PICKED_PRODUCT,
+  FETCH_UPDATING_PRODUCT,
+  FINISH_UPDATE_PRODUCT,
+  CHANGE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_COMPLETE,
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  code: '',
+  id: '',
   name: '',
   cate: '',
   desc: '',
   image: '',
-  img_local_uri: '',
-  img_base64_string: null,
   sell_price: '0',
   orgin_price: '0',
   quantity: '0',
   attr: [],
   choosing_index: null,
   isProductSpinnerLoading: false,
+  isUpdateProduct: false,
+  choosingProduct: {},
+  isDeletingProduct: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -54,6 +60,28 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, image: action.payload }
     case FINISH_CREATE_PRODUCT:
       return INITIAL_STATE;
+    case CHANGE_PRODUCT_SUCCESS:
+      return { ...state, choosingProduct: action.payload }   
+    case FINISH_UPDATE_PRODUCT:
+      return {
+        ...state, 
+        id: '',
+        name: '',
+        cate: '',
+        desc: '',
+        image: '',
+        sell_price: '0',
+        orgin_price: '0',
+        quantity: '0',
+        attr: [],
+        choosing_index: null,
+        isProductSpinnerLoading: false,
+        isUpdateProduct: false
+      }
+    case PICKED_PRODUCT:
+      return { ...state, choosingProduct: action.payload }
+    case FETCH_UPDATING_PRODUCT:
+      return { ...state, isUpdateProduct: true }
     default:
       return state;
   }

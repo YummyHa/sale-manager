@@ -21,6 +21,18 @@ export const FINISH_CREATE_PRODUCT = 'finish_create_product';
 export const CREATE_PRODUCT_SUCCESS = 'create_product_success';
 export const FETCH_PRODUCT_SUCCESS = 'fetch_product_success';
 
+// prodcut Details
+export const IS_PICKING_PRODUCT = 'is_picking_product';
+export const PICKED_PRODUCT = 'picked_product';
+
+// product Updates
+export const FETCH_UPDATING_PRODUCT = 'fetch_updating_product';
+export const CHANGE_PRODUCT_SUCCESS = 'change_product_success';
+export const FINISH_UPDATE_PRODUCT = 'finish_update_product';
+export const UPDATE_LIST_SUCCESS = 'update_list_success';
+export const DELETE_PRODUCT_COMPLETE = 'delete_product_complete';
+export const START_DELETE_PRODUCT = 'start_delete_product';
+
 // attributes
 export const FETCH_ATTR_SUCCESS = 'fetch_attr_success';
 export const CHOOSING_ATTR = 'choosing_attr';
@@ -43,13 +55,24 @@ export const ADDING_NEW_CATE = 'adding_new_cate';
 export const REMOVE_CATE = 'remove_cate';
 
 // Orders
-export const ADD_NEW_ORDER_SUCCESS = 'add_new_order_success';
+export const ADD_NEW_ORDER_LIST_SUCCESS = 'add_new_order_list_success';
 export const UPDATE_ORDER_QUANTITY_PLUS = 'update_order_quantity_plus';
 export const UPDATE_ORDER_QUANTITY_MINUS = 'update_order_quantity_minus';
 export const UPDATE_ORDER_QUANTITY = 'update_order_quantity';
 export const UPDATE_ORDER_LIST = 'update_order_list';
 export const UPDATE_TOTAL_ORDER_AMOUNT = 'update_total_order_amout';
 export const UPDATE_CUSTOMER_NAME_IN_ORDERING_LIST = 'update_customer_name_in_ordering_list';
+export const OPEN_PAY_MODAL = 'open_pay_modal';
+export const CLOSE_PAY_MODAL = 'close_pay_modal';
+export const DISCOUNT_CHANGED = 'discount_changed';
+export const DISCOUNT_TOTAL = 'discount_total';
+export const PAID_MONEY_CHANGED = 'paid_money_changed';
+export const CHANGE_CHANGED = 'change_changed';
+export const UPDATE_ORGIN_TOTAL = 'update_orgin_total';
+export const ADDING_NEW_ORDER = 'adding_new_order';
+export const ADD_NEW_ORDER_SUCCESS = 'add_new_order_success';
+export const FINISH_ADD_ORDER = 'finish_add_order';
+export const FETCH_ORDER_SUCCESS = 'fetch_order_success';
 
 // Customers
 export const CUSTOMERS_FETCH_SUCCESS = 'customers_fetch_success';

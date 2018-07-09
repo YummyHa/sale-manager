@@ -16,19 +16,33 @@ import BarCodeScanner from './screens/BarCodeScanner';
 import ProductAttributes from './screens/ProductAttributes';
 import CategoriesScreen from './screens/CategoriesScreen';
 import CustomersScreen from './screens/Customers';
+import ListOrders from "./screens/Orders/ListOrders";
+import productDetail from './screens/Products/productDetail';
+import ProductUpdate from './screens/Products/updateProduct';
+import Receipt from './screens/Products/receipt';
 
 const productNavigator = StackNavigator({
   product_index: { screen: Products },
   product_create: { screen: CreateProduct },
   product_attr: { screen: ProductAttributes },
-  cate_screen: { screen: CategoriesScreen }
+  cate_screen: { screen: CategoriesScreen },
+  product_detail: { screen: productDetail },
+  product_update: { screen: ProductUpdate },
+  product_receipt: { screen: Receipt },
 }, {
     headerMode: 'none'
   });
 
+const orderNavigator = StackNavigator({
+  order_current: { screen: Orders },
+  order_list: { screen: ListOrders }
+}, {
+  headerMode: 'none'
+});
+
 const MainNavigator = TabNavigator({
   sale: { screen: Sale },
-  orders: { screen: Orders },
+  orders: { screen: orderNavigator },
   products: { screen: productNavigator },
   summary: { screen: Summary },
   settings: { screen: Settings },

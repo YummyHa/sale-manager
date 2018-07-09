@@ -7,6 +7,7 @@ import cateReducer from './cateReducer';
 import productListReducer from './productListReducer';
 import ordersReducer from './ordersReducer';
 import customersReducer from './customersReducer';
+import listOrdersReducer from './orderListReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -16,4 +17,5 @@ export default combineReducers({
   list_product: productListReducer,
   orders: ordersReducer,
   customers: customersReducer,
+  list_orders: listOrdersReducer
 });

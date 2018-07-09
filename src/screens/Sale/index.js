@@ -51,7 +51,11 @@ class SaleScreen extends Component {
         onPress={() => this.props.addProductToOrderList(item, this.props.ordering_list)}
       >
         <Left>
-          <Thumbnail square source={require("../../images/product-default.png")} />
+          {item.image === '' ? <Thumbnail
+            square source={require("../../images/product-default.png")}
+          /> : <Thumbnail
+              square source={{ uri: item.image }}
+            />}
         </Left>
         <Body>
           <Text>{item.name}</Text>

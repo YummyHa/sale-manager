@@ -15,7 +15,7 @@ import {
   Item,
   Input,
   StyleProvider,
-  List,
+  List, 
   ListItem,
   Thumbnail,
   Fab,
@@ -46,9 +46,17 @@ class ProductsScreen extends Component {
     });
 
     return (
-      <ListItem thumbnail style={{ marginBottom: 1, minHeight: 60 }}>
+      <ListItem 
+        thumbnail 
+        style={{ marginBottom: 1, minHeight: 60 }}
+        onPress={() => this.props.goToProductDetail(item, () => this.props.navigation.navigate('product_detail'))}
+      >
         <Left>
-          <Thumbnail square source={require("../../images/product-default.png")} />
+          {item.image === '' ? <Thumbnail 
+            square source={require("../../images/product-default.png")} 
+          /> : <Thumbnail 
+            square source={{ uri: item.image }}
+          />}
         </Left>
         <Body>
           <Text>{item.name}</Text>

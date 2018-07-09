@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import '@firebase/firestore';
+import _ from 'lodash'; 
 import Moment from 'moment';
 
 import {
@@ -13,7 +14,14 @@ import {
   UPLOAD_PRODUCT_IMAGE_SUCCESS,
   FINISH_CREATE_PRODUCT,
   CREATE_PRODUCT_SUCCESS,
-  FETCH_PRODUCT_SUCCESS
+  FETCH_PRODUCT_SUCCESS,
+  PICKED_PRODUCT,
+  FETCH_UPDATING_PRODUCT,
+  FINISH_UPDATE_PRODUCT,
+  CHANGE_PRODUCT_SUCCESS,
+  UPDATE_LIST_SUCCESS,
+  DELETE_PRODUCT_COMPLETE,
+  START_DELETE_PRODUCT
 } from './types';
 
 export const productUpdate = ({ prop, value }) => {
@@ -89,7 +97,7 @@ export const uploadImage = (uri) => async dispatch => {
   // }
 }
 
-export const addNewProductToFireStore = ({ code, name, cate, sell_price, orgin_price, quantity, desc, image, attr }, callback) => (dispatch) => {
+export const addNewProductToFireStore = ({ id, name, cate, sell_price, orgin_price, quantity, desc, image, attr }, callback) => (dispatch) => {
   let { currentUser } = firebase.auth();
   try {
     dispatch({ type: START_CREATE_PRODUCT });
@@ -107,7 +115,7 @@ export const addNewProductToFireStore = ({ code, name, cate, sell_price, orgin_p
       attr: attr
     };
 
-    if (code === '') {
+    if (id === '') {
       db.collection('users').doc(`${currentUser.uid}`).collection('products').add(data)
         .then((docRef) => {
           let data2 = { ...data, id: docRef.id }
@@ -117,8 +125,8 @@ export const addNewProductToFireStore = ({ code, name, cate, sell_price, orgin_p
         });
     } else {
       db.collection('users').doc(`${currentUser.uid}`).collection('products').doc(id).set(data)
-        .then((docRef) => {
-          let data2 = { ...data, id: docRef.id }
+        .then(() => {
+          let data2 = { ...data, id: id }
           dispatch({ type: CREATE_PRODUCT_SUCCESS, payload: data2 });
           dispatch({ type: FINISH_CREATE_PRODUCT });
           callback();
@@ -128,8 +136,6 @@ export const addNewProductToFireStore = ({ code, name, cate, sell_price, orgin_p
     console.log(err);
     alert("Có lỗi xảy ra, vui lòng xem lại thông tin hoặc thử lại sau!");
     dispatch({ type: FINISH_CREATE_PRODUCT });
-  } finally {
-
   }
 }
 
@@ -158,4 +164,62 @@ export const fetchListProduct = () => async dispatch => {
     .catch((err) => {
       console.log(err);
     });
+}
+
+// Edit Product
+
+export const goToProductDetail = (product, callback) => dispatch => {
+  dispatch({ type: PICKED_PRODUCT, payload: product });
+  callback();
+}
+
+export const goToUpdateProduct = () => dispatch => {
+  dispatch({ type: FETCH_UPDATING_PRODUCT });
+}
+
+// Update Product
+export const updateProductChanges = ({ id, name, cate, sell_price, orgin_price, quantity, desc, image, attr }, callback) => dispatch => {
+  let { currentUser } = firebase.auth();
+  try {
+    dispatch({ type: START_CREATE_PRODUCT });
+    let db = firebase.firestore();
+
+    // create data object
+    let data = {
+      name: name,
+      cate: cate,
+      sell_price: sell_price,
+      orgin_price: orgin_price,
+      quantity: quantity,
+      desc: desc,
+      image: image,
+      attr: attr
+    };
+
+    db.collection('users').doc(`${currentUser.uid}`).collection('products').doc(id).set(data)
+      .then(() => {
+        let data2 = { ...data, id: id }
+        dispatch({ type: CHANGE_PRODUCT_SUCCESS, payload: data2 });
+        dispatch({ type: UPDATE_LIST_SUCCESS, payload: data2 })
+        dispatch({ type: FINISH_UPDATE_PRODUCT });
+        callback();
+      });
+  } catch (err) {
+    console.log(err);
+    alert("Có lỗi xảy ra, vui lòng xem lại thông tin hoặc thử lại sau!");
+    dispatch({ type: FINISH_UPDATE_PRODUCT });
+  }
+}
+
+// Delete Product
+export const deleteCurrentProduct = (id, array, callback) => async dispatch => {
+  const { currentUser } = firebase.auth();
+  let db = firebase.firestore();
+  dispatch({ type: START_DELETE_PRODUCT });
+
+  await db.collection('users').doc(`${currentUser.uid}`).collection('products').doc(id).delete()
+    .then(() => {
+      dispatch({ type: DELETE_PRODUCT_COMPLETE, payload: array });
+      callback();
+    })
 }
